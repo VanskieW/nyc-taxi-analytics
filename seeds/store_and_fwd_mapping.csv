@@ -1,0 +1,3 @@
+store_and_fwd_flag,flag_description
+"Y","Store and forward trip"
+"N","Not a store and forward trip"

@@ -42,3 +42,15 @@ seeds:
     # seeds/ directory for this project
     vendor_mapping:
       quote_columns: true
+
+    rate_code_mapping:
+      quote_columns: true
+
+    store_and_fwd_mapping:
+      quote_columns: true
+
+    payment_mapping:
+      quote_columns: true
+
+vars:
+  surrogate_key_treat_nulls_as_empty_strings: true
