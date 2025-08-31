@@ -1,11 +1,11 @@
-{# {{ config(
+{{ config(
     materialized='table',
-    cluster_by=['pickup_datetime_utc', 'pickup_location_id']  -- optional for faster date/location queries
-) }} #}
+    unique_key='trip_id'
+) }}
 
 WITH raw AS (
     SELECT *
-    FROM RAW.TLC_YELLOW_TRIPS_2021
+    FROM {{ source('raw', 'TLC_YELLOW_TRIPS_2021') }}
 ),
 
 vendor_map AS (
@@ -28,14 +28,12 @@ payment_map AS (
 )
 
 SELECT
-   {{ dbt_utils.generate_surrogate_key([
+   {{ generate_trip_surrogate_key([
     'vendor_id',
     'pickup_location_id',
     'rate_code',
     'payment_type',
-    'fare_amount',
-    'tip_amount',
-    'total_amount',
+    'store_and_fwd_flag',
     'pickup_datetime',
     'dropoff_datetime'
 ]) }} AS trip_id,
@@ -72,6 +70,16 @@ LEFT JOIN store_and_fwd_flag_map sf
   ON r.store_and_fwd_flag = sf."store_and_fwd_flag"
 LEFT JOIN payment_map p
   ON r.payment_type = p."payment_code"
+
+WHERE  
+              r.fare_amount IS NOT NULL 
+              AND dropoff_datetime >= pickup_datetime
+              AND r.trip_distance IS NOT NULL
+              AND r.payment_type IS NOT NULL
+              AND r.rate_code IS NOT NULL
+              AND r.store_and_fwd_flag IS NOT NULL
+              AND  r.pickup_datetime IS NOT NULL
+            
 
 
 

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: src_tlc_yellow_trips
+    description: "{{ doc('src_tlc_yellow_trips_doc') }}"
+    columns:
+      - name: trip_id
+        description: "Unique surrogate key per trip"
+        tests:
+          - unique
+          - not_null
+      - name: vendor_id
+        description: "Vendor code"
+        tests:
+          - not_null
+      - name: pickup_datetime_utc
+        description: "Trip start timestamp"
+        tests:
+          - not_null
+      - name: dropoff_datetime_utc
+        description: "Trip end timestamp"
+        tests:
+          - not_null
+      - name: fare_amount
+      - name: tip_amount
+      - name: total_amount

@@ -17,6 +17,8 @@ test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
+# docs-paths: ["docs"]
+
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
@@ -53,4 +55,4 @@ seeds:
       quote_columns: true
 
 vars:
-  surrogate_key_treat_nulls_as_empty_strings: true
+  surrogate_key_treat_nulls_as_empty_strings: true # for surrogate key generation in staging modelsS

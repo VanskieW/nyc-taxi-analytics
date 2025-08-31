@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw NYC Yellow Taxi data from TLC"
+    tables:
+      - name: TLC_YELLOW_TRIPS_2021
+        description: "Trip-level data including pickup, dropoff, fare, vendor, and payment info."
+        tests:
+          - not_null:
+              column_name: vendor_id
+          - not_null:
+              column_name: pickup_datetime
+          - not_null:
+              column_name: dropoff_datetime
