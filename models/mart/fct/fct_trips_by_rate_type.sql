@@ -35,3 +35,7 @@ LEFT JOIN {{ ref('dim_vendor') }} v ON t.vendor_id = v.vendor_id
 LEFT JOIN {{ ref('dim_rate') }} rt ON t.rate_code = rt.rate_code
 GROUP BY 1,2,3,4,5
 ORDER BY vendor_name, pickup_location_id, rate_type
+
+
+-- This model aggregates NYC Yellow Taxi trips by vendor, pickup location, and rate type.
+-- It joins to dimension tables for vendor and rate information.

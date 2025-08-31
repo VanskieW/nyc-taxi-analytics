@@ -29,6 +29,10 @@ WITH trips AS (
 SELECT
     t.data_file_year,
     t.data_file_month,
+    d.month,
+    d.week,
+    d.day,
+    d.day_type,
     t.vendor_id,
     v.vendor_name,
     t.pickup_location_id,
@@ -66,4 +70,5 @@ LEFT JOIN {{ ref('dim_vendor') }} v ON t.vendor_id = v.vendor_id
 LEFT JOIN {{ ref('dim_rate') }} r ON t.rate_code = r.rate_code
 LEFT JOIN {{ ref('dim_store_flag') }} sf ON t.store_and_fwd_flag = sf.store_and_fwd_flag
 LEFT JOIN {{ ref('dim_payment') }} p ON t.payment_code = p.payment_code
-GROUP BY 1,2,3,4,5,6,7,8,9
+LEFT JOIN {{ ref('dim_date') }} d ON DATE(t.pickup_datetime_utc) = d.date
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13

@@ -1,0 +1,149 @@
+version: 2
+
+models:
+  - name: fct_trips
+    description: "{{ doc('fct_trips_doc') }}"
+      
+    columns:
+      - name: data_file_year
+        description: Year of the trip file (partition key).
+        tests:
+          - not_null
+      - name: data_file_month
+        description: Month of the trip file (partition key).
+        tests:
+          - not_null
+      - name: vendor_id
+        description: Vendor identifier, joined to dim_vendor }}.
+        tests:
+          - not_null
+      - name: vendor_name
+        description: Vendor company name.
+      - name: pickup_location_id
+        description: TLC zone identifier for the trip pickup location.
+        tests:
+          - not_null
+      - name: rate_type
+        description: Type of rate charged for the trip (e.g. standard, JFK flat).
+      - name: payment_code
+        description: Payment method code.
+        tests:
+          - not_null
+      - name: payment_type
+        description: Human-readable payment type.
+      - name: store_and_fwd_desc
+        description: Whether the trip record was held in vehicle memory before sending (store-and-forward).
+      - name: total_trips
+        description: Count of all trips in the group.
+        tests:
+          - not_null
+      - name: voided_trips
+        description: Count of trips marked voided (payment_code = 6).
+      - name: disputed_trips
+        description: Count of trips marked disputed (payment_code = 4).
+      - name: store_and_forward_trips
+        description: Count of trips flagged as store-and-forward.
+      - name: pct_store_and_forward
+        description: Share of trips that were store-and-forward.
+      - name: total_passengers
+        description: Sum of passengers across all trips.
+      - name: avg_passengers_per_trip
+        description: Average passengers per trip.
+      - name: total_distance
+        description: Sum of trip distances in miles.
+      - name: avg_trip_distance
+        description: Average distance traveled per trip.
+      - name: total_duration_minutes
+        description: Total trip time in minutes.
+      - name: avg_trip_duration_minutes
+        description: Average trip duration in minutes.
+      - name: avg_speed_mph
+        description: Average calculated speed across trips (miles/hour).
+      - name: total_fare
+        description: Total fare amounts collected.
+      - name: total_extras
+        description: Sum of extras (e.g. night surcharge).
+      - name: total_mta_tax
+        description: Sum of MTA tax amounts.
+      - name: total_imp_surcharge
+        description: Sum of improvement surcharges.
+      - name: total_airport_fee
+        description: Sum of airport access fees.
+      - name: total_tolls
+        description: Sum of toll charges.
+      - name: total_surcharges
+        description: Sum of all surcharges (tax + tolls + fees).
+      - name: total_tips
+        description: Total tip amounts collected.
+      - name: total_revenue
+        description: Total revenue from trips (fares + extras + tips + surcharges).
+      - name: avg_revenue_per_trip
+        description: Average revenue per trip.
+      - name: avg_tip_pct
+        description: Average tip percentage of total revenue.
+      - name: high_value_trips
+        description: Count of trips with total amount > 100.
+      - name: high_value_revenue
+        description: Total revenue from high-value trips.
+
+  - name: fct_trips_by_rate_type
+    description: "{{ doc('fct_trips_by_rate_type_doc') }}"
+      
+    columns:
+      - name: vendor_id
+        description: "Vendor identifier"
+        tests:
+          - not_null
+         
+
+      - name: vendor_name
+        description: "Vendor name from the vendor dimension table."
+        tests:
+          - not_null
+
+      - name: pickup_location_id
+        description: "Identifier for the pickup location (can be joined to dim_location if available)."
+        tests:
+          - not_null
+
+      - name: rate_code
+        description: "Rate code identifier"
+        tests:
+          - not_null
+          
+
+      - name: rate_type
+        description: "Rate type description from dim_rate."
+
+      - name: total_trips
+        description: "Total number of trips in the aggregation."
+
+      - name: voided_trips
+        description: "Number of trips with payment code = 6 (voided)."
+
+      - name: disputed_trips
+        description: "Number of trips with payment code = 4 (disputed)."
+
+      - name: total_fare
+        description: "Sum of fare amounts for all trips."
+
+      - name: total_tips
+        description: "Sum of tip amounts for all trips."
+
+      - name: total_revenue
+        description: "Sum of total amounts (fare + tips + extras) for all trips."
+
+      - name: avg_revenue_per_trip
+        description: "Average total amount per trip."
+
+      - name: total_duration_minutes
+        description: "Total trip duration in minutes."
+
+      - name: avg_trip_duration_minutes
+        description: "Average trip duration in minutes."
+
+      - name: high_value_trips
+        description: "Number of trips where total_amount > 100."
+
+      - name: high_value_revenue
+        description: "Total revenue from high-value trips (total_amount > 100)."

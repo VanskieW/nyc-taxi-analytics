@@ -28,7 +28,7 @@ payment_map AS (
 )
 
 SELECT
-   {{ generate_trip_surrogate_key([
+   {{ dbt_utils.generate_surrogate_key([
     'vendor_id',
     'pickup_location_id',
     'rate_code',

@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Calendar dimension"
+    columns:
+      - name: date
+        description: "Calendar date"
+        tests:
+          - unique
+          - not_null
+      - name: year
+        description: "Year number"
+      - name: month
+        description: "Month number"
+      - name: week
+        description: "Week number"
+      - name: day_of_week
+        description: "Day of the week"
+      - name: day_type
+        description: "Day type (weekday/weekend/holiday)"
+
+  - name: dim_store_flag
+    description: "Store and forward flag dimension"
+    columns:
+      - name: store_and_fwd_flag
+        description: "Flag code"
+        tests:
+          - not_null
+      - name: flag_description
+        description: "Flag description"
+        tests:
+          - not_null
+
+  - name: dim_payment
+    description: "Payment type dimension"
+    columns:
+      - name: payment_type
+        description: "Payment code"
+        tests:
+          - not_null
+      - name: payment_description
+        description: "Payment type description"
+        tests:
+          - not_null
+
+  - name: dim_rate
+    description: "Rate code dimension for trip types"
+    columns:
+      - name: rate_code
+        description: "Rate code"
+        tests:
+          - not_null
+      - name: rate_type
+        description: "Human-readable rate type"
+        tests:
+          - not_null
+
+  - name: dim_vendor
+    description: "Taxi vendor dimension"
+    columns:
+      - name: vendor_id
+        description: "Vendor code"
+        tests:
+          - not_null
+      - name: vendor_name
+        description: "Vendor name"
+        tests:
+          - not_null
